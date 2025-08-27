@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: 255 255 255;
+  --fg: 17 24 39;
+  --muted: 107 114 128;
+  --accent: 59 130 246;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: 17 24 39;
+    --fg: 243 244 246;
+    --muted: 156 163 175;
+    --accent: 99 102 241;
+  }
+}
+
+html, body { height: 100%; }
+body {
+  color: rgb(var(--fg));
+  background: rgb(var(--bg));
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Utilidades del proyecto */
+.container { @apply max-w-5xl mx-auto px-4; }
+.link { @apply underline decoration-dotted underline-offset-4 hover:opacity-90; }
+.card { @apply rounded-2xl border border-gray-200/20 shadow-sm p-6 bg-white/60 dark:bg-gray-900/60; }
+.navlink { @apply text-sm font-medium hover:opacity-90; }
+.btn { @apply inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-medium transition; }
+.btn-primary { @apply text-white bg-blue-600 hover:opacity-90; }
+.btn-outline { @apply border border-gray-300/60 hover:bg-gray-50 dark:hover:bg-gray-800; }
+.badge { @apply inline-flex items-center text-xs px-2 py-1 rounded-full border border-gray-200/20 bg-gray-50/50 dark:bg-gray-800/60; }
+
+/* Borde gris por defecto + degradado en hover (1px, respeta el radius) */
+.card-hover {
+  @apply relative overflow-hidden rounded-2xl transition;
+  border: 1px solid rgba(229, 231, 235, 0.2);
+}
+
+/* Capa degradada (oculta hasta hover) */
+.card-hover::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px; /* grosor del borde = 1px */
+  background: linear-gradient(to right, #3B82F6, #6366F1);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  opacity: 0;
+  transition: opacity .25s ease;
+  pointer-events: none;
+}
+
+/* En hover: mostramos el degradado y ocultamos el borde gris */
+.card-hover:hover::before { opacity: 1; }
+.card-hover:hover { border-color: transparent; }
+
+/* Chips un pelín más compactos */
+.badge { padding: 0.25rem 0.6rem; }
+
+/* Texto con gradiente azul→violeta */
+.gradient-text {
+  background-image: linear-gradient(to right, #3B82F6, #6366F1);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
